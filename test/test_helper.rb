@@ -2,9 +2,6 @@ require 'rubygems'
 require 'test/unit'
 require 'mocha'
 
-dir = File.dirname(__FILE__)
-Dir.glob(File.join(File.dirname(__FILE__), '../lib/ruby_config/**/*.rb')).each {|f| require f }
-
 require 'fileutils'
 require 'open-uri'
 require 'tempfile'
@@ -12,6 +9,11 @@ require 'pathname'
 require 'ostruct'
 require 'optparse'
 require "yaml"
+
+lib_dir = File.dirname(__FILE__) + '/../lib'
+$:.unshift lib_dir unless $:.include?(lib_dir)
+
+require 'ruby_config'
 
 class Test::Unit::TestCase  
   # test "verify something" do

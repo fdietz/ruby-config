@@ -46,22 +46,28 @@ module RubyConfig
     
     def setup
       config = RubyConfig::ProfileConfig.new(bash_profile_path)
-      
-      if config.exists?
+      if config.file_exists? && config.exists?
         puts "Found existing profile configuration. You are all set!"
       else
-        puts "Ruby-Config will add the following lines to your environment:"
-        puts "#{bash_profile_path}:"
-        puts config.content
-        puts
-        
-        if agree("Append configuration to your profile? [y/n]  ", true)
-          config.change
-          puts 
-          puts "Done! To apply changes execute the following command:"
-          puts " source #{bash_profile_path}"
+        show_configuration_changes(config.export_variables_string)
+        if agree("Apply configuration changes? [y/n]  ", true)
+          config.file_exists? ? config.apply_changes : config.create_new_file
+          educate_about_source_profile
         end
       end
+    end
+
+    def educate_about_source_profile
+      puts
+      puts "Done! Either start a new shell or execute the following command to apply the changes to your current shell:"
+      puts "# source #{bash_profile_path}"
+    end
+    
+    def show_configuration_changes(content)
+      puts "Ruby-Config will apply the following changes to your profile"
+      puts "#{bash_profile_path}:"
+      puts content
+      puts
     end
     
     def bash_profile_path
