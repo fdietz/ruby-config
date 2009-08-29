@@ -1,3 +1,6 @@
+require 'ruby_config/config'
+require 'ruby_config/file_helper'
+
 module RubyConfig
   
   class Registry
@@ -10,7 +13,6 @@ module RubyConfig
       @tmp_path = File.join(ruby_config_path, "tmp")
       
       @config = RubyConfig::Config.new(@ruby_config_path)
-      @environment_config = RubyConfig::EnvironmentConfig.new(@ruby_config_path)
       
       @list = []
       ensure_config_directory_exists
@@ -92,17 +94,6 @@ module RubyConfig
       FileUtils.mkdir_p(@tmp_path)      
       FileUtils.mkdir_p(@runtime_install_path)
     end
-
-    # bash_alias required by jruby nailgun
-    # def update_current_environment_config(ruby_home, gem_home, bash_alias = {})
-    #   set_bash_var = {'GEM_HOME' => gem_home, 'RUBY_HOME' => ruby_home}
-    #   prepend_bash_var = {'PATH' => "#{ruby_home}/bin" }
-    #   
-    #   @environment_config.set_bash_var = set_bash_var
-    #   @environment_config.prepend_bash_var = prepend_bash_var
-    #   @environment_config.bash_alias = bash_alias
-    #   @environment_config.save
-    # end
 
   end
   

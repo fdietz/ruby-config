@@ -22,7 +22,6 @@ class RuntimeBaseDoInstallTest < Test::Unit::TestCase
   test "should create directory structure" do
     r = RuntimeBaseTestHelper::RuntimeBaseStub.new(File.join(@root, "install"), File.join(@root, "tmp"))
     r.stubs(:download_file_unless_exists)
-    r.stubs(:already_installed?).returns(true)
     r.do_install
     
     assert File.exist?(r.install_path)
@@ -33,20 +32,9 @@ class RuntimeBaseDoInstallTest < Test::Unit::TestCase
   test "should install runtime and cleanup tmp unless installed already" do
     r = RuntimeBaseTestHelper::RuntimeBaseStub.new(File.join(@root, "install"), File.join(@root, "tmp"))
     r.stubs(:download_file_unless_exists)
-    r.stubs(:already_installed?).returns(false)
     
     r.expects(:install).once
     r.expects(:cleanup_tmp_dir).once  
-    r.do_install
-  end
-  
-  test "should NOT install runtime if installed already" do
-    r = RuntimeBaseTestHelper::RuntimeBaseStub.new(File.join(@root, "install"), File.join(@root, "tmp"))
-    r.stubs(:download_file_unless_exists)
-    r.stubs(:already_installed?).returns(true)
-    
-    r.expects(:install).never
-    r.expects(:cleanup_tmp_dir).never
     r.do_install
   end
   

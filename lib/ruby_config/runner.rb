@@ -1,3 +1,9 @@
+require 'ruby_config/runtime_base'
+require 'ruby_config/options_parser'
+require 'ruby_config/profile_config'
+
+Dir.glob(File.join(File.dirname(__FILE__), 'runtimes/*.rb')).each {|f| require f }
+
 module RubyConfig
 
   class Runner
@@ -22,11 +28,13 @@ module RubyConfig
         elsif options.install
           install_runtime(options.runtime)
         elsif options.uninstall
-          # TODO
+          uninstall(options.runtime)
         elsif options.use
           use_runtime(options.runtime)
         elsif options.help
           help(options_parser)
+        elsif options.setup
+          setup
         end
       rescue OptionParser::ParseError => e
         puts e
@@ -35,6 +43,49 @@ module RubyConfig
     end
 
     private 
+    
+    def setup
+      config = RubyConfig::ProfileConfig.new(bash_profile_path)
+      
+      if config.exists?
+        puts "Found existing profile configuration. You are all set!"
+      else
+        puts "Ruby-Config will add the following lines to your environment:"
+        puts "#{bash_profile_path}:"
+        puts config.content
+        puts
+        
+        if agree("Append configuration to your profile? [y/n]  ", true)
+          config.change
+          puts 
+          puts "Done! To apply changes execute the following command:"
+          puts " source #{bash_profile_path}"
+        end
+      end
+    end
+    
+    def bash_profile_path
+      File.join(ENV['HOME'], '.bash_profile')
+    end
+    
+    def uninstall(handle)
+      unless @registry.exist?(handle)
+        puts "Unknown ruby runtime: #{handle}."
+        return
+      end
+      
+      if @registry.default?(handle)
+        puts "Can't delete currently selected runtime."
+        return
+      end
+      
+      runtime = @registry.get(handle)
+      
+      if agree("Really want to delete: #{runtime.description}? [y/n]  ", true)
+        runtime.delete
+        puts "Done!"
+      end
+    end
     
     def load_available_runtimes
       list = []
@@ -94,7 +145,7 @@ module RubyConfig
     def print_info_header
       puts "ruby-config (http://github/fdietz/ruby-config)"
       puts "Author: Frederik Dietz <fdietz@gmail.com>"
-      puts "Version: #{RubyConfig::VERSION}"
+      puts "Version: #{RubyConfig.version}"
       puts
     end
     
@@ -153,13 +204,3 @@ module RubyConfig
 
   end
 end
-
-#RubyConfig::Runner.new.run
-
-
-# require 'fileutils'
-# if ARGV.include?('--dry-run')
-#   include FileUtils::DryRun
-# else
-#   include FileUtils::Verbose
-# end

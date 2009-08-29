@@ -17,7 +17,9 @@ module RubyConfig
       @options.use = false
       @options.runtime = nil
       @options.install = false
+      @options.uninstall = false
       @options.help = false
+      @options.setup = false
       
       @optparse = OptionParser.new do |opts|
         opts.banner = "Usage: ruby-config [options]"
@@ -47,9 +49,13 @@ module RubyConfig
           @options.runtime = runtime
           abort("No Runtime specified") unless runtime
         end
+        
+        opts.on('--setup', 'Setup your bash script') do
+          @options.setup = true
+        end
 
         opts.on('-v', '--version', 'Display version' ) do
-          puts "ruby-config version: #{RubyConfig.VERSION}"
+          puts "ruby-config version: #{RubyConfig.version}"
           exit
         end
 

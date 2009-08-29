@@ -101,6 +101,10 @@ module RubyConfig
        Pathname.new(File.join(ruby_bin_path, 'ruby')).exist?
     end
     
+    def delete
+      FileUtils.remove_entry_secure(@install_path)
+    end
+    
     protected
 
       def install_rubygems
