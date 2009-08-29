@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{ruby-config}
-  s.version = "0.3.0"
+  s.version = "0.4.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Frederik Dietz"]
@@ -41,7 +41,8 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{Install and Switch between various Ruby Runtimes easily}
   s.test_files = [
-    "test/unit/registry_test.rb",
+    "test/unit/profile_config_test.rb",
+     "test/unit/registry_test.rb",
      "test/unit/runtime_base_test.rb"
   ]
 
