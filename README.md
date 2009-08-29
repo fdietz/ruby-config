@@ -1,10 +1,4 @@
-# ruby-config
-
-
-* Github: [http://github.com/fdietz/ruby-config](http://github.com/fdietz/ruby-config)
-* Author: [http://fdietz.net](http://fdietz.net)
-
-## Description
+# Ruby-Config
 
 Ruby-Config lets you install and switch between various Ruby Runtimes
 
@@ -16,9 +10,9 @@ Currently, it supports the following Ruby Runtimes:
 * Ruby Enterprise Edition 1.8.6-20090421
 * JRuby 1.3.1
 
-Ruby-Config sets up all runtimes and a dedicated gem home for each runtime in the user's 
-home directory. You can easily start using it without fearing that your system's 
-configuration will be corrupted.
+Ruby-Config is written in Ruby and designed to be unobtrusive to your system configuration.
+It sets up all runtimes and a dedicated gem home for each runtime in the user's 
+home directory. 
 
 ## Getting Started
 
@@ -94,6 +88,12 @@ Use apt-get to install the essential packages:
 ## Kudos
 
 Thanks to Relevance for their work on [Ruby Switcher](http://github.com/relevance/etc/blob/3d607c8ac2f76077f27c3cbc0140b04a89f546be/bash/ruby_switcher.sh) which I used as the basis for the installation of various Ruby Runtimes.
+
+## Contact
+* Author: Frederik Dietz <fdietz@gmail.com>
+* Website: [http://fdietz.net](http://fdietz.net) 
+* Github: [http://github.com/fdietz/ruby-config](http://github.com/fdietz/ruby-config)
+
 
 ## License
 
