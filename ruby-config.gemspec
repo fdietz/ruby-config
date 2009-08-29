@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{ruby-config}
-  s.version = "0.2.0"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Frederik Dietz"]
-  s.date = %q{2009-08-24}
+  s.date = %q{2009-08-29}
   s.default_executable = %q{ruby-config}
   s.description = %q{ruby-config lets one easily install and switch between various Ruby Runtimes}
   s.email = %q{fdietz@gmail.com}
@@ -21,9 +21,9 @@ Gem::Specification.new do |s|
     "bin/ruby-config",
      "lib/ruby_config.rb",
      "lib/ruby_config/config.rb",
-     "lib/ruby_config/environment_config.rb",
      "lib/ruby_config/file_helper.rb",
      "lib/ruby_config/options_parser.rb",
+     "lib/ruby_config/profile_config.rb",
      "lib/ruby_config/registry.rb",
      "lib/ruby_config/runner.rb",
      "lib/ruby_config/runtime_base.rb",
