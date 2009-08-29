@@ -58,10 +58,29 @@ Switch to an already installed runtime:
 
 	#bash: ruby-config -u jruby-1.3.1
 	
-Alternatively, you can use the index again.
+Alternatively, you can use the index again.. Now check the ruby-version:
 
-	#bash: ruby-config -u 3
+	#bash: ruby -v
+	jruby 1.3.1 (ruby 1.8.6p287) (2009-06-15 2fd6c3d) (Java HotSpot(TM) Client VM 1.5.0_19) [i386-java]
+	
+	#bash: which ruby
+	/Users/frd/.ruby-config/ruby/bin/ruby
+	
+And the gem environment:
 
+	# bash: gem env
+	RubyGems Environment:
+	  - RUBYGEMS VERSION: 1.3.3
+	  - RUBY VERSION: 1.8.6 (2009-06-15 patchlevel 287) [java]
+	  - INSTALLATION DIRECTORY: /Users/frd/.ruby-config/gem
+	  - RUBY EXECUTABLE: /Users/frd/.ruby-config/ruby/bin/jruby
+	  - EXECUTABLE DIRECTORY: /Users/frd/.ruby-config/gem/bin
+	  - RUBYGEMS PLATFORMS:
+	    - ruby
+	    - universal-java-1.5
+	  - GEM PATHS:
+	     - /Users/frd/.ruby-config/gem
+	
 ## Prerequisites
 
 ### Mac OS X: 
