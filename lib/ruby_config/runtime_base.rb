@@ -8,32 +8,28 @@ module RubyConfig
       @install_path = File.join(install_path, handle)
       @tmp_path = tmp_path
     end
-    
+  
     def do_install
-      create_directory_structure
-      
-      download_file_unless_exists(archive_file_name, archive_download_url)
-      
-      # runtime specific installation part
+      prepare_install
       install
-          
-      cleanup_tmp_dir
     end
-        
+
+    # called after the archive was successfully downloaded to tmp/archive_file_name directory
+    # you might want to:
+    # * extract archive
+    # * configure && make && make install
     def install
       raise "Not implemented yet!"
     end
-
-    def do_post_install
-      post_install
-      
-      install_rubygems unless File.exists?(gem_executable_path)
-      
-      # install thyselve
-      #install_gem('ruby-config')
-    end
     
-    # called after install and runtime is enabled
+    # called after:
+    # * runtime.install
+    # * switch to newly installed runtime
+    # * rubygems installation
+    #
+    # you might want to:
+    # * install additional rubygems
+    # * set symlinks
     def post_install
     end
     
@@ -104,60 +100,37 @@ module RubyConfig
     def delete
       FileUtils.remove_entry_secure(@install_path)
     end
+
+    def create_directory_structure
+      [@install_path, @tmp_path, ruby_home_path, ruby_bin_path, gem_home_path].each do |path|
+        FileUtils.mkdir_p(path)
+      end
+    end      
     
-    protected
+    def archive_path
+      File.join(@tmp_path, archive_file_name)
+    end
+    
+    def prepare_install
+      create_directory_structure                  
+      download_archive unless archive_exists?  
+    end
+    
+    
+    private 
+    
+      def archive_exists?
+        File.exist?(archive_path)
+      end
 
-      def install_rubygems
-        version = "1.3.5"
-        archive_name = "rubygems-#{version}"
-        archive_file_name = "#{archive_name}.tgz"
-        download_url = "http://rubyforge.org/frs/download.php/60718/#{archive_file_name}"
+      def download_archive
+        download_file(archive_download_url, archive_path)
+      end
         
-        download_file_unless_exists(archive_file_name, download_url)
-        
-        extract_tar_gz(File.join(@tmp_path, archive_file_name), @tmp_path)
-        FileUtils.cd(File.join(@tmp_path, archive_name))
-        #system("ruby setup.rb --prefix=#{additional_library_path}")
-        system("ruby setup.rb")
-      end
-      
-      def cleanup_tmp_dir
-        empty_dir(@tmp_path)
-      end
-      
-      def create_directory_structure
-        FileUtils.mkdir_p(@install_path)
-        FileUtils.mkdir_p(@tmp_path)
-        FileUtils.mkdir_p(ruby_home_path)
-        FileUtils.mkdir_p(ruby_bin_path)
-        FileUtils.mkdir_p(gem_home_path)
-      end      
-      
-      def download_file_unless_exists(archive, url)
-        archive_path = File.join(@tmp_path, archive)
-        unless File.exist?(archive_path)
-          path = download_file_wget(url, archive_path)
-          puts "#{archive} downloaded successfully to #{archive_path}"
-        end
-      end
-       
-     def download_file_wget(url, destination_path)
-       system("wget #{url} --output-document=#{destination_path}")
-     end
-
-     def extract_tar_gz(archive_path, destination_path)
-       system("tar xfvz #{archive_path} -C #{destination_path}")
-     end
-      
-     def empty_dir(path)
-       Dir[File.join(path, '*')].each do |file|
-         FileUtils.remove_entry_secure(file) if Pathname.new(file).directory?
-       end
-     end
+      def download_file(url, destination_path)
+        system("wget #{url} --output-document=#{destination_path}")
+      end  
      
-     def gem_install(gem_technical_name)
-       system "gem install -q --no-ri --no-rdoc #{gem_technical_name}"
-     end
   end
 
-  end
+end

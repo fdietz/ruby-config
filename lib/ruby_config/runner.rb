@@ -1,6 +1,9 @@
+require 'ruby_config/registry'
 require 'ruby_config/runtime_base'
 require 'ruby_config/options_parser'
 require 'ruby_config/profile_config'
+require 'ruby_config/installer'
+require 'ruby_config/switcher'
 
 Dir.glob(File.join(File.dirname(__FILE__), 'runtimes/*.rb')).each {|f| require f }
 
@@ -13,6 +16,10 @@ module RubyConfig
     def initialize
       @registry = RubyConfig::Registry.new(RUBY_CONFIG_PATH)
       load_available_runtimes.each { |runtime| @registry.add(runtime) }
+      
+      @installer = RubyConfig::Installer.new(RUBY_CONFIG_PATH)
+      @switcher = RubyConfig::Switcher.new(RUBY_CONFIG_PATH)
+      @config = RubyConfig::Config.new(RUBY_CONFIG_PATH)
     end
     
     def run
@@ -79,8 +86,8 @@ module RubyConfig
         puts "Unknown ruby runtime: #{handle}."
         return
       end
-      
-      if @registry.default?(handle)
+            
+      if default?(handle)
         puts "Can't delete currently selected runtime."
         return
       end
@@ -117,10 +124,16 @@ module RubyConfig
       
       runtime = @registry.get(handle)
             
-      puts "#{runtime} already installed" if runtime.already_installed?
+      if runtime.already_installed?
+        puts "#{runtime} already installed" 
+      else
+        @installer.install(runtime)
+        @switcher.switch(runtime)
+        @installer.post_install(runtime)
+        
+        print_use_results(runtime)
+      end
       
-      @registry.install(runtime)
-      print_use_results(runtime)
     end
     
     def use_runtime(handle)
@@ -131,7 +144,7 @@ module RubyConfig
       
       runtime = @registry.get(handle)
       
-      if @registry.use(runtime)
+      if @switcher.switch(runtime)
         #display_ruby_version
         #print_use_results(runtime)
         display_ruby_version(runtime)
@@ -171,7 +184,7 @@ module RubyConfig
     
     def print_runtime(index, item)
       print "#{index+1}) "
-      print @registry.default?(item.handle) ? "*" : " "
+      print default?(item.handle) ? "*" : " "
       puts " #{item}"
     end
     
@@ -208,5 +221,9 @@ module RubyConfig
       exit
     end
 
+    def default?(handle)
+      handle == @config.default_handle
+    end
+    
   end
 end

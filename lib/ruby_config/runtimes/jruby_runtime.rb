@@ -56,7 +56,7 @@ module RubyConfig
       # there is already a jgem and gem, therefore no symlink required for gem!
       def set_symlinks_for_jruby_commands
         jruby_commands_requiring_symlinks.each do |item|
-          RubyConfig::FileHelper.set_symlink(item.first, bin_path(item.last))
+          FileUtils.ln_s(item.first, bin_path(item.last))
         end
       end
       

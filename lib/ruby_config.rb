@@ -9,12 +9,12 @@ require 'yaml'
 require 'highline/import'
 
 require 'ruby_config/runner'
-require 'ruby_config/registry'
-require 'ruby_config/file_helper'
+#require 'ruby_config/registry'
 
 module RubyConfig  
   def self.version
-    RubyConfig::FileHelper.read_content_from_file(File.join(File.dirname(__FILE__), '..', 'VERSION'))
+    version_path = File.join(File.dirname(__FILE__), '..', 'VERSION')
+    File.open(version_path, "r")  { |file| file.read  }
   end
 end
 
