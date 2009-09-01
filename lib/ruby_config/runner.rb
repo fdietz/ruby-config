@@ -82,7 +82,7 @@ module RubyConfig
     end
     
     def uninstall(handle)
-      unless @registry.exist?(handle)
+      unless @registry.exists?(handle)
         puts "Unknown ruby runtime: #{handle}."
         return
       end
@@ -117,7 +117,7 @@ module RubyConfig
     end
     
     def install_runtime(handle)
-      unless @registry.exist?(handle)
+      unless @registry.exists?(handle)
         puts "Unknown ruby runtime: #{handle}"
         return
       end
@@ -137,7 +137,7 @@ module RubyConfig
     end
     
     def use_runtime(handle)
-      unless @registry.exist?(handle)
+      unless @registry.exists?(handle)
         puts "Unknown ruby runtime: #{handle}"
         return
       end

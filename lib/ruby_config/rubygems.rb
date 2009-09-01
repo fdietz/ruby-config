@@ -10,13 +10,9 @@ module RubyConfig
     def initialize(ruby_config_path)
       @ruby_config_path = ruby_config_path
     end
-
-    def installed?(runtime)
-      File.exists?(runtime.gem_executable_path)      
-    end
     
     def install(runtime)
-      download_file_unless_exists(DOWNLOAD_URL, ARCHIVE_FILE_NAME) unless archive_exists?
+      download_file(DOWNLOAD_URL, archive_file_name) unless archive_exists?
 
       extract_tar_gz(archive_file_name, tmp_path)
       
@@ -35,8 +31,8 @@ module RubyConfig
         system("ruby setup.rb")
       end
       
-      def extract_tar_gz(archive_path, destination_path)
-        system("tar xfvz #{archive_path} -C #{destination_path}")
+      def extract_tar_gz(tgz_archive_path, destination_path)
+        system("tar xfvz #{tgz_archive_path} -C #{destination_path}")
       end    
     
       def tmp_path
@@ -54,11 +50,7 @@ module RubyConfig
       def archive_exists?
         File.exist?(archive_path)
       end
-    
-      def download_file_unless_exists(archive, url)        
-        download_file(url, archive_path(archive)) unless archive_exists?(archive)
-      end
-    
+     
       def download_file(url, destination_path)
         system("wget #{url} --output-document=#{destination_path}")
       end

@@ -23,7 +23,7 @@ module RubyConfig
     end
     
     def post_install(runtime)
-      @rubygems.install(runtime) unless @rubygems.installed?(runtime)
+      @rubygems.install(runtime) unless runtime.rubygems_installed?
     
       runtime.post_install
     

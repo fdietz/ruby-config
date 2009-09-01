@@ -116,6 +116,9 @@ module RubyConfig
       download_archive unless archive_exists?  
     end
     
+    def rubygems_installed?
+      File.exists?(gem_executable_path)      
+    end
     
     private 
     
@@ -130,6 +133,10 @@ module RubyConfig
       def download_file(url, destination_path)
         system("wget #{url} --output-document=#{destination_path}")
       end  
+     
+      def extract_tar_gz(archive_path, destination_path)
+        system("tar xfvz #{archive_path} -C #{destination_path}")
+      end    
      
   end
 

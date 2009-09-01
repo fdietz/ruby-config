@@ -3,7 +3,7 @@ module RubyConfig
     
     attr_accessor :hash
     
-    DEFAULTS = { 'default' => 'ruby-leopard-1.8.6' }
+    #DEFAULTS = { 'default' => 'ruby-leopard-1.8.6' }
     
     def initialize(path)
       @config_file = File.join(path, "config.yml")

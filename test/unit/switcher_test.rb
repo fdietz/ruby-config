@@ -36,12 +36,13 @@ class SwitcherTest < Test::Unit::TestCase
   
   test "should delete obsolete existing symlinks" do
     @switcher.stubs(:set_default_handle)
-    @switcher.stubs(:create_symlinks)
     
     create_fake_ruby_and_gem_directories
     create_fake_ruby_and_gem_symlinks
     
     @switcher.switch(@runtime)
+    assert File.exists?(ruby_path)
+    assert File.exists?(gem_path)
   end
   
   private

@@ -19,33 +19,7 @@ class InstallerTest < Test::Unit::TestCase
     File.exists?(@installer.runtime_install_path)
     File.exists?(@installer.tmp_path)
   end  
-  
-  test "should call do_install on runtime and cleanup tmp directory afterwards" do
-    @runtime.expects(:do_install)
-    @installer.expects(:cleanup_tmp_dir)
-    @installer.install(@runtime)
-  end  
-
-  test "should install rubygems, post_install on runtime and install ruby-config gem" do
-    @runtime.expects(:post_install)
     
-    @installer.rubygems.expects(:installed?).returns(false)
-    @installer.rubygems.expects(:install).with(@runtime)
-    @installer.rubygems.expects(:gem_install).with(RubyConfig::Installer::RUBY_CONFIG_GEM_NAME)
-    
-    @installer.post_install(@runtime)
-  end  
-
-  test "should skip rubygems install if already installed" do
-    @runtime.stubs(:post_install)
-    @installer.rubygems.stubs(:gem_install)
-    
-    @installer.rubygems.expects(:installed?).returns(true)
-    @installer.rubygems.expects(:install).never
-    
-    @installer.post_install(@runtime)
-  end  
-  
 end
 
 module RuntimeBaseTestHelper

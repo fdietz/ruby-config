@@ -53,13 +53,6 @@ class RuntimeBaseTest < Test::Unit::TestCase
     assert File.exists?(@runtime.gem_home_path)
   end
 
-  test "should call prepare_install and then install" do
-    @runtime.expects(:prepare_install)
-    @runtime.expects(:install)
-
-    @runtime.do_install
-  end
-
   test "should delete runtime directories" do
     create_fake_runtime_directories
     @runtime.delete
