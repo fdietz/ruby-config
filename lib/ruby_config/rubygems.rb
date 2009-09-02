@@ -16,19 +16,21 @@ module RubyConfig
 
       extract_tar_gz(archive_file_name, tmp_path)
       
-      ruby_gems_setup(archive_path)
+      ruby_gems_setup(archive_path, runtime.ruby_executable_path, runtime.additional_library_path)
     end
     
     def gem_install(gem_technical_name)
-      system "gem install -q --no-ri --no-rdoc #{gem_technical_name}"
+      gem_executable_path = File.join(@ruby_config_path, 'gem')
+      system "GEM_HOME=#{gem_executable_path} gem install -q --no-ri --no-rdoc #{gem_technical_name}"
     end 
 
     private 
       
       # system("ruby setup.rb --prefix=#{additional_library_path}")
-      def ruby_gems_setup(path)
+      def ruby_gems_setup(path, ruby_executable_path, additional_library_path)
         FileUtils.cd(path)
-        system("ruby setup.rb")
+        puts "ruby executable path: #{ruby_executable_path}"
+        system("#{ruby_executable_path} setup.rb  --prefix=#{additional_library_path}")
       end
       
       def extract_tar_gz(tgz_archive_path, destination_path)

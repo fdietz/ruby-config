@@ -1,6 +1,6 @@
 require File.join(File.dirname(__FILE__), '..', 'test_helper')
 
-class Ruby186RuntimeTest < Test::Unit::TestCase
+class Ruby19RuntimeTest < Test::Unit::TestCase
 
   def setup
     @root = "/tmp/ruby-config"
@@ -12,8 +12,8 @@ class Ruby186RuntimeTest < Test::Unit::TestCase
     FileUtils.rm_rf(@root)
   end
 
-  test "should install and use ruby 186 runtime" do
-    runtime = RubyConfig::Runtimes::Ruby186Runtime.new(runtime_install_path, tmp_path)
+  test "should install and use ruby 189 runtime" do
+    runtime = RubyConfig::Runtimes::Ruby189Runtime.new(runtime_install_path, tmp_path)
     @installer.install(runtime)
     
     @switcher.switch(runtime)
@@ -23,7 +23,7 @@ class Ruby186RuntimeTest < Test::Unit::TestCase
     assert File.exist?(runtime.ruby_home_path)
     assert File.exist?(runtime.gem_home_path)
     assert File.exist?(File.join(runtime.ruby_bin_path, "ruby"))
-    assert File.exist?(File.join(runtime.ruby_home_path, "lib", "ruby", "site_ruby", "1.8", "bin", "gem"))
+    assert File.exist?(File.join(runtime.ruby_bin_path, "gem"))
     assert File.exist?(File.join(runtime.ruby_bin_path, "irb"))    
     
     # use checks

@@ -1,6 +1,6 @@
 require File.join(File.dirname(__FILE__), '..', 'test_helper')
 
-class Ruby186RuntimeTest < Test::Unit::TestCase
+class Ruby187RuntimeTest < Test::Unit::TestCase
 
   def setup
     @root = "/tmp/ruby-config"
@@ -12,8 +12,8 @@ class Ruby186RuntimeTest < Test::Unit::TestCase
     FileUtils.rm_rf(@root)
   end
 
-  test "should install and use ruby 186 runtime" do
-    runtime = RubyConfig::Runtimes::Ruby186Runtime.new(runtime_install_path, tmp_path)
+  test "should install and use ruby 187 runtime" do
+    runtime = RubyConfig::Runtimes::Ruby187Runtime.new(runtime_install_path, tmp_path)
     @installer.install(runtime)
     
     @switcher.switch(runtime)

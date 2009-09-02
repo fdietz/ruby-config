@@ -40,7 +40,7 @@ module RubyConfig
     end
     
     private
-
+      
       def cleanup_tmp_dir
         empty_dir(tmp_path)
       end
