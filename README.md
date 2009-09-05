@@ -22,19 +22,19 @@ Install the gem:
 	
 Ensure that your bash profile script is configured correctly:
 
-	#bash: ruby-config --setup
+	#bash: ruby-config setup
 	
 Note, that the setup routine will show the changes it will make beforehand and will prompt you
 before actually applying the changes. You can manually apply the changes if you decide.
 
 List all available runtimes:
 
-	#bash: ruby-config -a
+	#bash: ruby-config available
 	
 
 List all currently installed runtimes:
 
-	#bash: ruby-config -l
+	#bash: ruby-config list
 
 	Installed Ruby Versions:
 	1)   Default Leopard Ruby 1.8.6 [ruby-leopard-1.8.6]
@@ -48,15 +48,15 @@ The wildcard for the 5. item indicates that this is the currently used runtime.
 	
 Install new Runtime by handle name:
 
-	#bash: ruby-config -i jruby-1.3.1
+	#bash: ruby-config install jruby-1.3.1
 	
 Alternatively, you can use the index of the available runtimes listing:
 
-	#bash: ruby-config -i 3
+	#bash: ruby-config install 3
 
 Switch to an already installed runtime:
 
-	#bash: ruby-config -u jruby-1.3.1
+	#bash: ruby-config switch jruby-1.3.1
 	
 Alternatively, you can use the index again.. Now check the ruby-version:
 
