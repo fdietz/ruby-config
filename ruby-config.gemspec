@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{ruby-config}
-  s.version = "0.6.0"
+  s.version = "0.7.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Frederik Dietz"]
@@ -25,11 +25,11 @@ Gem::Specification.new do |s|
      "lib/ruby_config.rb",
      "lib/ruby_config/config.rb",
      "lib/ruby_config/installer.rb",
+     "lib/ruby_config/main.rb",
      "lib/ruby_config/options_parser.rb",
      "lib/ruby_config/profile_config.rb",
      "lib/ruby_config/registry.rb",
      "lib/ruby_config/rubygems.rb",
-     "lib/ruby_config/runner.rb",
      "lib/ruby_config/runtime_base.rb",
      "lib/ruby_config/runtimes/jruby_runtime.rb",
      "lib/ruby_config/runtimes/leopard_runtime.rb",
