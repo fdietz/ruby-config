@@ -36,6 +36,8 @@ module RubyConfig
       
       private
         def ree_installer
+          puts "path= #{File.join(@tmp_path, RUBY_ENTERPRISE_EDITION_DIR)}"
+          puts File.exists?(File.join(@tmp_path, RUBY_ENTERPRISE_EDITION_DIR))
           FileUtils.cd(File.join(@tmp_path, RUBY_ENTERPRISE_EDITION_DIR))
           system("./installer -a #{@install_path}/ruby --dont-install-useful-gems")
         end

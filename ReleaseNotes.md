@@ -1,6 +1,7 @@
 # Ruby-Config Release Notes
 
 ## ruby-config 0.6
+* Set GEM_HOME correctly when installing new gems 
 * Ensure that ruby-config gem is installed on each runtime gem path
 
 ## ruby-config 0.5

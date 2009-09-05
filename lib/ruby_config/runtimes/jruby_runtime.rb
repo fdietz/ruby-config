@@ -43,9 +43,12 @@ module RubyConfig
 
       def post_install
         # install_nailgun
-        install_jruby_specific_gem
       end
-  
+
+      def runtime_specific_gems
+        ['rake', 'jruby-openssl']
+      end
+      
       private
       
       def copy_archive_content_to_ruby_directory
@@ -55,16 +58,11 @@ module RubyConfig
             
       # there is already a jgem and gem, therefore no symlink required for gem!
       def set_symlinks_for_jruby_commands
-        jruby_commands_requiring_symlinks.each do |item|
-          FileUtils.ln_s(item.first, bin_path(item.last))
+        %w(ruby irb).each do |item|
+          FileUtils.ln_s(bin_path("j#{item}"), bin_path(item))
         end
       end
-      
-      def jruby_commands_requiring_symlinks
-        [[bin_path('jruby'), 'ruby' ], 
-         [bin_path('jirb') , 'irb'  ]]
-      end
-      
+            
       # CHECK: can we download an archive which preserves permissions instead?
       def chmod_executables
         %w(jruby jgem gem jirb).each { |command| chmod_executable_for_others(bin_path(command)) }  
@@ -85,12 +83,7 @@ module RubyConfig
         FileUtils.cd(nailgun_path)
         system "#{nailgun_path}/make"
       end
-      
-      def install_jruby_specific_gem
-        gem_install("rake")
-        gem_install("jruby-openssl")
-      end
-      
+         
     end
   
   end

@@ -12,8 +12,8 @@ class Ruby19RuntimeTest < Test::Unit::TestCase
     FileUtils.rm_rf(@root)
   end
 
-  test "should install and use ruby 189 runtime" do
-    runtime = RubyConfig::Runtimes::Ruby189Runtime.new(runtime_install_path, tmp_path)
+  test "should install and use ruby 19 runtime" do
+    runtime = RubyConfig::Runtimes::Ruby19Runtime.new(runtime_install_path, tmp_path)
     @installer.install(runtime)
     
     @switcher.switch(runtime)

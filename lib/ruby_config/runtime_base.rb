@@ -52,13 +52,19 @@ module RubyConfig
       raise "Not implemented yet!"
     end
 
+    # optional 
+    # Array of gem names of type string
+    def runtime_specific_gems
+      []
+    end
+    
     # example: 1.8 or 1.9
     def major_version
       '1.8'
     end
 
     # hash (key: alias name, value: alias bash script)
-    def bash_alias;{};end
+    # def bash_alias;{};end
     
     def ruby_home_path
       File.join(@install_path, 'ruby')
@@ -119,7 +125,7 @@ module RubyConfig
     def rubygems_installed?
       File.exists?(gem_executable_path)      
     end
-    
+        
     private 
     
       def archive_exists?

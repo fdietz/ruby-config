@@ -29,6 +29,8 @@ module RubyConfig
     
       # install thyself
       @rubygems.gem_install(RUBY_CONFIG_GEM_NAME)
+      
+      runtime.runtime_specific_gems.each { |gem| @rubygems.gem_install(gem)  }
     end
 
     def runtime_install_path

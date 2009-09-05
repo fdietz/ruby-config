@@ -14,7 +14,8 @@ module RubyConfig
     RUBY_CONFIG_PATH = File.join(ENV['HOME'], ".ruby-config")
     
     def initialize
-      @registry = RubyConfig::Registry.new(RUBY_CONFIG_PATH)
+      @rubygems = RubyConfig::Rubygems(RUBY_CONFIG_PATH)
+      @registry = RubyConfig::Registry.new(RUBY_CONFIG_PATH, @rubygems)
       load_available_runtimes.each { |runtime| @registry.add(runtime) }
       
       @installer = RubyConfig::Installer.new(RUBY_CONFIG_PATH)
@@ -193,20 +194,20 @@ module RubyConfig
       puts " RUBY_HOME=#{runtime.ruby_home_path}"
       puts " GEM_HOME=#{runtime.gem_home_path}"
       
-      unless runtime.bash_alias.empty?
-        puts "\nalias:"
-        print_alias(runtime.bash_alias)
-      end
+      # unless runtime.bash_alias.empty?
+      #   puts "\nalias:"
+      #   print_alias(runtime.bash_alias)
+      # end
       
       puts "\nruby -v:"
       display_system_ruby_version
     end
     
-    def print_alias(hash)
-      hash.each do |key, value|
-        puts " alias #{key}=\"#{value}\""
-      end
-    end
+    # def print_alias(hash)
+    #   hash.each do |key, value|
+    #     puts " alias #{key}=\"#{value}\""
+    #   end
+    # end
     
     def display_ruby_version(runtime)
       puts "Running: #{runtime}"
