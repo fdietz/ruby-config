@@ -3,4 +3,4 @@
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__) , '..', 'lib')
 require 'ruby_config'
 
-RubyConfig::Runner.new.run
+RubyConfig::Main.new.main(ARGV)

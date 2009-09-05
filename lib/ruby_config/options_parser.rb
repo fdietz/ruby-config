@@ -1,76 +1,120 @@
 module RubyConfig
   class OptionsParser
+
+    COMMANDS = { 
+      'list' => 'List installed Ruby runtimes',
+      'available' => 'List available Ruby runtimes',
+      'switch' => 'Switch to specific Ruby runtime',
+      'install' => 'Install specific Ruby runtime',
+      'uninstall' => 'Uninstall specific Ruby runtime',
+      'setup' => 'Setup your bash environment'
+    }
     
+    OPTIONS = {
+      '-v, --version' => "Display version",
+      '-h, --help' => "Display this screen"
+    }
+    
+    EXAMPLES = [
+      'ruby-config list ',
+      'ruby-config install jruby-1.3.1',
+      'ruby-config switch jruby-1.3.1',
+      'ruby-config -v'
+    ]
+       
     def initialize
       create_options
     end
     
     def print_help
-      puts @optparse
-    end
-    
-    def create_options
-      @options = OpenStruct.new
-      @options.verbose = false
-      @options.list_available = false
-      @options.list_installed = false
-      @options.use = false
-      @options.runtime = nil
-      @options.install = false
-      @options.uninstall = false
-      @options.help = false
-      @options.setup = false
+      puts "Usage: ruby-config [command] [options]"
+      puts
+      puts " Available Commands:"
       
-      @optparse = OptionParser.new do |opts|
-        opts.banner = "Usage: ruby-config [options]"
-
-        opts.on('-a', '--list-available', 'List available Ruby runtimes') do
-          @options.list_available = true
-        end
-
-        opts.on('-l', '--list-installed', 'List installed Ruby runtimes') do
-          @options.list_installed = true
-        end
-
-        opts.on('-u', '--use [HANDLE]', 'Use specific Ruby runtime') do |runtime|
-          @options.use = true
-          @options.runtime = runtime        
-          abort("No Runtime specified") unless runtime
-        end
-
-        opts.on('-i', '--install [HANDLE]', 'Install specific Ruby runtime') do |runtime|
-          @options.install = true
-          @options.runtime = runtime
-          abort("No Runtime specified") unless runtime
-        end
-
-        opts.on('--uninstall [HANDLE]', 'Uninstall specific Ruby runtime') do |runtime|
-          @options.uninstall = true
-          @options.runtime = runtime
-          abort("No Runtime specified") unless runtime
-        end
+      COMMANDS.each do |key, value|
+        puts "  #{key} #{indent} #{value}"
+      end
+      
+      puts
+      puts " Available Options:"
+      OPTIONS.each do |key, value|
+        puts "  #{key} #{indent} #{value}"
+      end
+      
+      puts 
+      puts " Examples:"
+      EXAMPLES.each do |value|
+        puts "  #{value}"
+      end
+      
+      puts
+    end
         
-        opts.on('--setup', 'Setup your bash script') do
-          @options.setup = true
-        end
+    def parse_commands!(arguments)
+      args = find_commands(arguments)
+      
+      @commands = OpenStruct.new
+      @commands.list = false
+      @commands.available = false
+      @commands.switch = false
+      @commands.install = false
+      @commands.uninstall = false
+      @commands.setup = false
+     
+      case args.first
+      when 'list'
+        @commands.list = true
+      when 'available'
+        @commands.available = true
+      when 'setup'
+        @commands.setup = true
+      when 'install'
+        @commands.install = true
+        @commands.handle = args[1]
+        abort("No Runtime specified") unless @commands.handle
+      when 'uninstall'
+        @commands.uninstall = true
+        @commands.handle = args[1]
+        abort("No Runtime specified") unless @commands.handle
+      when 'switch'
+        @commands.switch = true
+        @commands.handle = args[1]
+        abort("No Runtime specified") unless @commands.handle
+      end
+      
+      @commands
+    end
+            
+    def parse_options!(arguments)
+      @optparse.parse!(arguments)
+      @options
+    end
 
-        opts.on('-v', '--version', 'Display version' ) do
-          puts "ruby-config version: #{RubyConfig.version}"
-          exit
-        end
+    private
+    
+      def create_options
+        @options = OpenStruct.new
+        @options.help = false
 
-        opts.on('-h', '--help', 'Display this screen' ) do
-          @options.help = true
+        @optparse = OptionParser.new do |opts|
+          opts.on('-v', '--version', 'Display version' ) do
+            puts "ruby-config version: #{RubyConfig::VERSION}"
+            exit
+          end
+          opts.on('-h', '--help', 'Display this screen' ) do
+            @options.help = true
+          end
         end
       end
       
-    end
-    
-    def parse
-      @optparse.parse!
-      @options
-    end
+      def find_commands(args)
+        args.reject { |a| a =~ /^(-|--)/ }
+      end
       
+      def indent
+        "\t\t\t\t"
+      end
+    
   end
   
 end

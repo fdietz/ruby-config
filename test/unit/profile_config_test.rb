@@ -68,7 +68,7 @@ class ProfileConfigTest < Test::Unit::TestCase
   
   test "should contain the ruby-config header" do
     result = @config.send(:content_for_existing_script)
-    assert result.include?("# ruby-config v#{RubyConfig.version}")
+    assert result.include?("# ruby-config v#{RubyConfig::VERSION}")
   end
   
   test "should contain bash script header" do

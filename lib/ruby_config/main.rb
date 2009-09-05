@@ -7,7 +7,7 @@ require 'ruby_config/switcher'
 
 module RubyConfig
 
-  class Runner
+  class Main
 
     RUBY_CONFIG_PATH = File.join(ENV['HOME'], ".ruby-config")
     
@@ -19,31 +19,42 @@ module RubyConfig
       @config = RubyConfig::Config.new(RUBY_CONFIG_PATH)
     end
     
-    def run
+    def main(argv)
+      arguments = argv
       options_parser = RubyConfig::OptionsParser.new
-      
+            
       begin
-        options = options_parser.parse
-
-        if options.list_available
-          list_available  
-        elsif options.list_installed
-          list_installed
-        elsif options.install
-          install_runtime(options.runtime)
-        elsif options.uninstall
-          uninstall(options.runtime)
-        elsif options.use
-          use_runtime(options.runtime)
-        elsif options.help
+        options = options_parser.parse_options!(arguments)
+        
+        if options.help
           help(options_parser)
-        elsif options.setup
-          setup
+          exit
         end
       rescue OptionParser::ParseError => e
         puts e
         options_parser.print_help
+        exit
       end
+      
+      commands = options_parser.parse_commands!(arguments)
+      
+      if commands.list
+        list_installed
+      elsif commands.available
+        list_available
+      elsif commands.install
+        install(commands.handle)
+      elsif commands.uninstall
+        uninstall(commands.handle)
+      elsif commands.switch
+        switch(commands.handle)
+      elsif commands.setup
+        setup
+      else
+        puts "Unknown Command: #{arguments}"
+        options_parser.print_help
+      end
+      
     end
 
     private 
@@ -102,7 +113,7 @@ module RubyConfig
       options_parser.print_help
     end
     
-    def install_runtime(handle)
+    def install(handle)
       unless @registry.exists?(handle)
         puts "Unknown ruby runtime: #{handle}"
         return
@@ -122,7 +133,7 @@ module RubyConfig
       
     end
     
-    def use_runtime(handle)
+    def switch(handle)
       unless @registry.exists?(handle)
         puts "Unknown ruby runtime: #{handle}"
         return
@@ -150,7 +161,7 @@ module RubyConfig
     def print_info_header
       puts "ruby-config (http://github/fdietz/ruby-config)"
       puts "Author: Frederik Dietz <fdietz@gmail.com>"
-      puts "Version: #{RubyConfig.version}"
+      puts "Version: #{RubyConfig::VERSION}"
       puts
     end
     

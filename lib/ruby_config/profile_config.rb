@@ -51,7 +51,7 @@ module RubyConfig
     end
     
     def header
-      "# ruby-config v#{RubyConfig.version}"
+      "# ruby-config v#{RubyConfig::VERSION}"
     end
     
     def ruby_home
