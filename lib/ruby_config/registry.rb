@@ -1,4 +1,7 @@
 require 'ruby_config/config'
+require 'ruby_config/runtime_base'
+
+Dir.glob(File.join(File.dirname(__FILE__), 'runtimes/*.rb')).each {|f| require f }
 
 module RubyConfig
   
@@ -8,6 +11,7 @@ module RubyConfig
     
     def initialize(ruby_config_path)
       @ruby_config_path = ruby_config_path
+      load_available_runtimes.each { |runtime| add(runtime) }
     end
     
     def list
@@ -41,6 +45,13 @@ module RubyConfig
                 
     private
 
+      def load_available_runtimes
+        [ RubyConfig::Runtimes::LeopardRuntime, RubyConfig::Runtimes::RubyEnterpriseEditionRuntime,
+          RubyConfig::Runtimes::JRubyRuntime, RubyConfig::Runtimes::Ruby19Runtime,
+          RubyConfig::Runtimes::Ruby186Runtime, RubyConfig::Runtimes::Ruby187Runtime 
+        ]
+      end
+        
       def runtime_install_path
         File.join(@ruby_config_path, 'runtimes')
       end
@@ -48,6 +59,6 @@ module RubyConfig
       def tmp_path
         File.join(@ruby_config_path, 'tmp')
       end
+      
   end
-  
 end

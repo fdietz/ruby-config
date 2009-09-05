@@ -5,8 +5,6 @@ require 'ruby_config/profile_config'
 require 'ruby_config/installer'
 require 'ruby_config/switcher'
 
-Dir.glob(File.join(File.dirname(__FILE__), 'runtimes/*.rb')).each {|f| require f }
-
 module RubyConfig
 
   class Runner
@@ -14,10 +12,8 @@ module RubyConfig
     RUBY_CONFIG_PATH = File.join(ENV['HOME'], ".ruby-config")
     
     def initialize
-      @rubygems = RubyConfig::Rubygems(RUBY_CONFIG_PATH)
-      @registry = RubyConfig::Registry.new(RUBY_CONFIG_PATH, @rubygems)
-      load_available_runtimes.each { |runtime| @registry.add(runtime) }
-      
+      @rubygems = RubyConfig::Rubygems.new(RUBY_CONFIG_PATH)
+      @registry = RubyConfig::Registry.new(RUBY_CONFIG_PATH)      
       @installer = RubyConfig::Installer.new(RUBY_CONFIG_PATH)
       @switcher = RubyConfig::Switcher.new(RUBY_CONFIG_PATH)
       @config = RubyConfig::Config.new(RUBY_CONFIG_PATH)
@@ -100,18 +96,7 @@ module RubyConfig
         puts "Done!"
       end
     end
-    
-    def load_available_runtimes
-      list = []
-      list << RubyConfig::Runtimes::LeopardRuntime
-      list << RubyConfig::Runtimes::RubyEnterpriseEditionRuntime
-      list << RubyConfig::Runtimes::JRubyRuntime
-      list << RubyConfig::Runtimes::Ruby19Runtime
-      list << RubyConfig::Runtimes::Ruby186Runtime
-      list << RubyConfig::Runtimes::Ruby187Runtime
-      list
-    end
-    
+        
     def help(options_parser)
       print_info_header
       options_parser.print_help

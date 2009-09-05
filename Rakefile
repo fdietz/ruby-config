@@ -10,7 +10,7 @@ begin
     gem.email = "fdietz@gmail.com"
     gem.homepage = "http://github.com/fdietz/ruby-config"
     gem.authors = ["Frederik Dietz"]
-    gem.files = FileList['lib/**/*.rb', 'bin/*']
+    gem.files = FileList['lib/**/*.rb', 'bin/*', 'VERSION', 'ReleaseNotes.md', 'README.md']
     gem.test_files = FileList['test/unit/**/*_test.rb']
   end
 rescue LoadError
