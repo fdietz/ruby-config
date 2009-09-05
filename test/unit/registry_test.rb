@@ -6,14 +6,10 @@ class RegistryTest < Test::Unit::TestCase
   end
     
   test "should list all available runtimes" do
-    @registry.add(RubyConfig::Runtimes::LeopardRuntime)
-    
-    assert_equal 1, @registry.list_available.size
+    assert_equal 6, @registry.list_available.size
   end
   
-  test "should list all installed runtimes" do
-    @registry.add(RubyConfig::Runtimes::LeopardRuntime)
-    
+  test "should list all installed runtimes" do    
     @registry.list.first.expects(:already_installed?).returns(true)
     assert_equal 1, @registry.list_installed.size
   end

@@ -102,8 +102,7 @@ OS X comes with an already installed Java version.
 Use apt-get to install the essential packages:
 
  	sudo apt-get install sun-java6-jre sun-java6-jdk
-
-
+	
 ## Kudos
 
 Thanks to Relevance for their work on [Ruby Switcher](http://github.com/relevance/etc/blob/3d607c8ac2f76077f27c3cbc0140b04a89f546be/bash/ruby_switcher.sh) which I used as the basis for the installation of various Ruby Runtimes.

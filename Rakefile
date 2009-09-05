@@ -19,13 +19,13 @@ end
 
 require 'rake/testtask'
 Rake::TestTask.new(:test) do |test|
-  #test.libs << 'lib' #<< 'test'
+  test.libs << 'test'
   test.pattern = 'test/unit/**/*_test.rb'
   test.verbose = true
 end
 
 Rake::TestTask.new(:integration) do |test|
-  #test.libs << 'lib' #<< 'test'
+  test.libs << 'test'
   test.pattern = 'test/integration/**/*_test.rb'
   test.verbose = true
 end

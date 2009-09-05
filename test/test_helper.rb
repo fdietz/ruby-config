@@ -10,9 +10,6 @@ require 'ostruct'
 require 'optparse'
 require "yaml"
 
-lib_dir = File.dirname(__FILE__) + '/../lib'
-$:.unshift lib_dir unless $:.include?(lib_dir)
-
 require 'ruby_config'
 
 class Test::Unit::TestCase  
