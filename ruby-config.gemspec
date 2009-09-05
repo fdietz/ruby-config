@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{ruby-config}
-  s.version = "0.5.0"
+  s.version = "0.6.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Frederik Dietz"]
-  s.date = %q{2009-08-29}
+  s.date = %q{2009-09-05}
   s.default_executable = %q{ruby-config}
   s.description = %q{ruby-config lets one easily install and switch between various Ruby Runtimes}
   s.email = %q{fdietz@gmail.com}
@@ -18,13 +18,17 @@ Gem::Specification.new do |s|
     "README.md"
   ]
   s.files = [
-    "bin/ruby-config",
+    "README.md",
+     "ReleaseNotes.md",
+     "VERSION",
+     "bin/ruby-config",
      "lib/ruby_config.rb",
      "lib/ruby_config/config.rb",
-     "lib/ruby_config/file_helper.rb",
+     "lib/ruby_config/installer.rb",
      "lib/ruby_config/options_parser.rb",
      "lib/ruby_config/profile_config.rb",
      "lib/ruby_config/registry.rb",
+     "lib/ruby_config/rubygems.rb",
      "lib/ruby_config/runner.rb",
      "lib/ruby_config/runtime_base.rb",
      "lib/ruby_config/runtimes/jruby_runtime.rb",
@@ -33,22 +37,26 @@ Gem::Specification.new do |s|
      "lib/ruby_config/runtimes/ruby187_runtime.rb",
      "lib/ruby_config/runtimes/ruby19_runtime.rb",
      "lib/ruby_config/runtimes/ruby_enterprise_edition_runtime.rb",
-     "lib/ruby_config/runtimes/ruby_from_source_helper.rb"
+     "lib/ruby_config/runtimes/ruby_from_source_helper.rb",
+     "lib/ruby_config/switcher.rb"
   ]
+  s.has_rdoc = true
   s.homepage = %q{http://github.com/fdietz/ruby-config}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.5}
+  s.rubygems_version = %q{1.3.1}
   s.summary = %q{Install and Switch between various Ruby Runtimes easily}
   s.test_files = [
-    "test/unit/profile_config_test.rb",
+    "test/unit/installer_test.rb",
+     "test/unit/profile_config_test.rb",
      "test/unit/registry_test.rb",
-     "test/unit/runtime_base_test.rb"
+     "test/unit/runtime_base_test.rb",
+     "test/unit/switcher_test.rb"
   ]
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
-    s.specification_version = 3
+    s.specification_version = 2
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
     else
