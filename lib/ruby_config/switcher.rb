@@ -10,6 +10,7 @@ module RubyConfig
     end
     
     def switch(runtime)    
+      puts "SWITCH"
       set_default_handle(runtime.handle)
       set_symlinks_to_runtime(runtime)
     end
@@ -17,9 +18,22 @@ module RubyConfig
     def set_symlinks_to_runtime(runtime)
       delete_existing_symlinks
       create_symlinks(runtime)
+      set_environment(runtime)
     end
     
     private
+    
+      # will only apply for current ruby-config process
+      # after ruby-config exits bash profile will take over again
+      def set_environment(runtime)
+        puts "set_environment..."
+        ENV['RUBY_HOME'] = runtime.ruby_home_path
+        ENV['GEM_HOME'] = runtime.gem_home_path
+        #ENV['GEM_PATH'] = runtime.gem_home_path
+        ENV['PATH'] = "#{ENV['PATH']}:#{runtime.ruby_bin_path}:#{runtime.gem_bin_path}"
+        # ENV['GEM_PATH'] = runtime.additional_library_path 
+      end
+      
       def ruby_path
         File.join(@ruby_config_path, "ruby")
       end

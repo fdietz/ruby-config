@@ -25,7 +25,11 @@ module RubyConfig
       def archive_download_url
         JRUBY_DOWNLOAD_URL
       end
-          
+      
+      def gem_home_path
+        File.join(ruby_home_path, 'lib', 'ruby', 'site_ruby', major_version)
+      end
+                
       # only required for nailgun support
       # def bash_alias
       #   {'ruby_ng', 'jruby --ng', 

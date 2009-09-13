@@ -28,6 +28,10 @@ module RubyConfig
         RUBY_ENTERPRISE_EDITION_DOWNLOAD_URL
       end
       
+      def gem_home_path
+        File.join(ruby_home_path, 'lib', 'ruby', 'site_ruby', major_version)
+      end
+      
       def install
         extract_tar_gz(File.join(@tmp_path, archive_file_name), @tmp_path)
         
@@ -36,8 +40,6 @@ module RubyConfig
       
       private
         def ree_installer
-          puts "path= #{File.join(@tmp_path, RUBY_ENTERPRISE_EDITION_DIR)}"
-          puts File.exists?(File.join(@tmp_path, RUBY_ENTERPRISE_EDITION_DIR))
           FileUtils.cd(File.join(@tmp_path, RUBY_ENTERPRISE_EDITION_DIR))
           system("./installer -a #{@install_path}/ruby --dont-install-useful-gems")
         end

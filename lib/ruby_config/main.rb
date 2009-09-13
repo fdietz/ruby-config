@@ -186,33 +186,21 @@ module RubyConfig
     end
     
     def print_use_results(runtime)
-      puts "env:"
-      puts " RUBY_HOME=#{runtime.ruby_home_path}"
-      puts " GEM_HOME=#{runtime.gem_home_path}"
-      
-      # unless runtime.bash_alias.empty?
-      #   puts "\nalias:"
-      #   print_alias(runtime.bash_alias)
-      # end
+      puts "gem env:"
+      display_gem_env(runtime)
       
       puts "\nruby -v:"
-      display_system_ruby_version
+      display_ruby_version(runtime)
     end
-    
-    # def print_alias(hash)
-    #   hash.each do |key, value|
-    #     puts " alias #{key}=\"#{value}\""
-    #   end
-    # end
+        
+    def display_gem_env(runtime)
+      system("#{runtime.gem_executable_path} env")
+    end
     
     def display_ruby_version(runtime)
-      puts "Running: #{runtime}"
+      system("#{runtime.ruby_executable_path} -v")    
     end
-    
-    def display_system_ruby_version
-      system "ruby -v"
-    end
-    
+        
     def abort(message)
       puts message
       exit

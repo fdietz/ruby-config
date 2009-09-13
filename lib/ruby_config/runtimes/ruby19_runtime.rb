@@ -33,6 +33,10 @@ module RubyConfig
       def archive_download_url
         RubyConfig::Runtimes::RubyFromSourceHelper.download_url(MAJOR_VERSION, MINOR_VERSION, PATCH_LEVEL)
       end
+
+      def gem_executable_path
+        File.join(ruby_bin_path, 'gem')
+      end
       
       def install
         extract_tar_gz(File.join(@tmp_path, archive_file_name), @tmp_path)

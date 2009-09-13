@@ -78,6 +78,10 @@ module RubyConfig
       File.join(@install_path, 'gem')
     end
     
+    def gem_bin_path
+      File.join(gem_home_path, 'bin')
+    end
+    
     def ruby_executable_path
       File.join(ruby_bin_path, 'ruby')
     end

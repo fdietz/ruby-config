@@ -29,7 +29,7 @@ module RubyConfig
       end
       str
     end
-
+    
     private 
     
     def content_for_new_script

@@ -16,21 +16,38 @@ module RubyConfig
     end
 
     def install(runtime)       
+      puts "ENTERING INSTALL"
       runtime.do_install 
 
-      # TOOD: only cleanup runtime-specific files
+      # TODO: only cleanup runtime-specific files
       cleanup_tmp_dir
+      puts "LEAVING INSTALL"
     end
     
     def post_install(runtime)
+      puts "ENTERING POST_INSTALL"
       @rubygems.install(runtime) unless runtime.rubygems_installed?
     
       runtime.post_install
     
-      # install thyself
-      @rubygems.gem_install(RUBY_CONFIG_GEM_NAME)
+      puts "ENTERING GEM INSTALL"
+      # TODO: fix gem installation for 
+      # * ruby-enterprise-edition
+      begin
+        # install thyself
+        @rubygems.gem_install(RUBY_CONFIG_GEM_NAME, runtime)
+      rescue Exception => e
+        puts "Error when trying to install fdietz-ruby-config gem: #{e.message}"
+      end
       
-      runtime.runtime_specific_gems.each { |gem| @rubygems.gem_install(gem)  }
+      begin
+        runtime.runtime_specific_gems.each { |gem| @rubygems.gem_install(gem, runtime)  }
+      rescue Exception => e
+        puts "Error when trying to install #{runtime.runtime_specific_gems.join(',')} gems: #{e.message}"
+      end
+      
+      puts "LEAVING GEM INSTALL"
+      puts "LEAVING POST_INSTALL"
     end
 
     def runtime_install_path
