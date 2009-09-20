@@ -22,9 +22,9 @@ class Ruby187RuntimeTest < Test::Unit::TestCase
     # install checks
     assert File.exist?(runtime.ruby_home_path)
     assert File.exist?(runtime.gem_home_path)
-    assert File.exist?(File.join(runtime.ruby_bin_path, "ruby"))
-    assert File.exist?(File.join(runtime.ruby_home_path, "lib", "ruby", "site_ruby", "1.8", "bin", "gem"))
-    assert File.exist?(File.join(runtime.ruby_bin_path, "irb"))    
+    assert File.exist?(runtime.ruby_executable_path)
+    assert File.exist?(runtime.gem_executable_path)
+    assert File.exist?(runtime.irb_executable_path)    
     
     # use checks
     assert Pathname.new(File.join(@root, "ruby")).symlink?

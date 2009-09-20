@@ -37,6 +37,11 @@ module RubyConfig
         RubyConfig::Runtimes::RubyFromSourceHelper.compile(File.join(@tmp_path, ARCHIVE_PATH), ruby_home_path)
       end
         
+      def gem_executable_path
+        puts "entering Ruby186Runtime::gem_executable_path.."
+        File.join(additional_library_path, 'bin', 'gem')
+      end
+      
     end
   
   end
