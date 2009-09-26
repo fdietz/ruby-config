@@ -28,9 +28,10 @@ module RubyConfig
       # system("ruby setup.rb --prefix=#{additional_library_path}")
       def ruby_gems_setup(path, ruby_executable_path, additional_library_path)
         FileUtils.cd(path)
-        puts "ruby executable path: #{ruby_executable_path}"
+        # puts "ruby executable path: #{ruby_executable_path}"
         # system("#{ruby_executable_path} setup.rb  --prefix=#{additional_library_path}")
-        system("#{ruby_executable_path} setup.rb")
+        # system("#{ruby_executable_path} setup.rb")
+        system("setup.rb")
       end
       
       def extract_tar_gz(tgz_archive_path, destination_path)

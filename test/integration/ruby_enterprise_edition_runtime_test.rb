@@ -15,20 +15,11 @@ class RubyEnterpriseEditionRuntimeTest < Test::Unit::TestCase
   test "should install and use ruby enterprise edition runtime" do
     runtime = RubyConfig::Runtimes::RubyEnterpriseEditionRuntime.new(runtime_install_path, tmp_path)
     @installer.install(runtime)
-    
-    @switcher.switch(runtime)
-    @installer.post_install(runtime)
-    
-    # install checks
     assert File.exist?(runtime.ruby_home_path)
     assert File.exist?(runtime.gem_home_path)
-    assert File.exist?(File.join(runtime.ruby_bin_path, "ruby"))
-    assert File.exist?(File.join(runtime.ruby_bin_path, "gem"))
-    assert File.exist?(File.join(runtime.ruby_bin_path, "irb"))    
-    
-    # use checks
-    assert Pathname.new(File.join(@root, "ruby")).symlink?
-    assert Pathname.new(File.join(@root, "gem")).symlink?
+    assert File.exist?(runtime.ruby_executable_path)
+    assert File.exist?(runtime.gem_executable_path)
+    assert File.exist?(runtime.irb_executable_path)    
   end
   
   private 

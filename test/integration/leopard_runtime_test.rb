@@ -15,13 +15,6 @@ class RubyEnterpriseEditionRuntimeTest < Test::Unit::TestCase
   test "should install and use leopard runtime" do
     runtime = RubyConfig::Runtimes::LeopardRuntime.new(runtime_install_path, tmp_path)
     @installer.install(runtime)
-    
-    @switcher.switch(runtime)
-    @installer.post_install(runtime)
-    
-    # use checks
-    assert Pathname.new(File.join(@root, "ruby")).symlink?
-    assert Pathname.new(File.join(@root, "gem")).symlink?
   end
   
   

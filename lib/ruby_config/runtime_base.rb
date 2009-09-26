@@ -87,7 +87,7 @@ module RubyConfig
     end
 
     def gem_executable_path
-      puts "entering RuntimeBase::#{gem_executable_path}.."
+      puts "entering RuntimeBase::gem_executable_path.."
       File.join(ruby_bin_path, 'gem')
     end
     

@@ -28,15 +28,16 @@ module RubyConfig
         RUBY_ENTERPRISE_EDITION_DOWNLOAD_URL
       end
       
-      def gem_home_path
-        File.join(ruby_home_path, 'lib', 'ruby', 'site_ruby', major_version)
-      end
-      
+      # def gem_home_path
+      #   File.join(ruby_home_path, 'lib', 'ruby', 'site_ruby', major_version)
+      # end
+            
       def install
         extract_tar_gz(File.join(@tmp_path, archive_file_name), @tmp_path)
         
         ree_installer
       end
+
       
       private
         def ree_installer
