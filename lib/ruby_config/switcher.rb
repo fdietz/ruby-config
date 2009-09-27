@@ -46,7 +46,7 @@ module RubyConfig
       
       def delete_existing_symlinks
         [ruby_path, gem_path].each do |path|
-          File.delete(path) if File.exist?(path)
+          FileUtils.remove_entry_secure(path) if File.exist?(path)
         end
       end
                  
