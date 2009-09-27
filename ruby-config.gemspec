@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{ruby-config}
-  s.version = "0.7.0"
+  s.version = "0.8.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Frederik Dietz"]
-  s.date = %q{2009-09-05}
+  s.date = %q{2009-09-27}
   s.default_executable = %q{ruby-config}
   s.description = %q{ruby-config lets one easily install and switch between various Ruby Runtimes}
   s.email = %q{fdietz@gmail.com}
